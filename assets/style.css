@@ -8,7 +8,7 @@ a{color:inherit}img{max-width:100%;display:block}
 header.top{position:sticky;top:0;z-index:20;background:rgba(15,17,21,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:14px;height:60px}
 .logo{font-weight:900;font-size:22px;letter-spacing:.5px;text-decoration:none;display:flex;align-items:center;gap:8px}
-.logo b{color:var(--acc)}.logo small{font-size:11px;color:var(--mut);font-weight:500;letter-spacing:0}
+.logo img{display:block;height:40px;width:auto}footer .logo img{height:36px}.logo b{color:var(--acc)}.logo small{font-size:11px;color:var(--mut);font-weight:500;letter-spacing:0}
 .nav nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
 .nav nav a{text-decoration:none;color:var(--mut);padding:8px 10px;border-radius:10px;font-size:14px;white-space:nowrap}
 .nav nav a:hover,.nav nav a.on{color:var(--txt);background:var(--panel)}
