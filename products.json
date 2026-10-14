@@ -2,58 +2,6 @@
  "updated": "2026-10-09",
  "products": [
   {
-   "slug": "hasbro-marvel-legends-venom-f9091",
-   "sahibinden_id": "1344644206",
-   "title": "Venom",
-   "short": "Venom aksiyon figürü, 6 inç (yaklaşık 15 cm), Venom: Let There Be Carnage. Sıfır, pencereli kutusunda.",
-   "brand": "",
-   "category": "aksiyon-figur",
-   "price": 1499,
-   "new": false,
-   "featured": false,
-   "stock_note": "",
-   "description": [
-    "Venom aksiyon figürü, 6 inç (yaklaşık 15 cm), Venom: Let There Be Carnage.",
-    "Sıfır / kullanılmamış, pencereli kutusunda. Venom koleksiyonu için güçlü bir vitrin parçası."
-   ],
-   "features": [
-    "20'den fazla eklem noktası; baş, kollar ve bacaklar tam hareketli",
-    "Film görünümüne uygun güncellenmiş boya detayları",
-    "Kutu içeriği: figür + 5 aksesuar (alternatif kafa, alternatif el çifti, takılıp çıkarılabilen 2 adet sembiyot dokunaç)",
-    "Filmden esinlenen kutu tasarımıyla sergilemeye uygun pencereli koleksiyon kutusu"
-   ],
-   "specs": [
-    [
-     "Karakter",
-     "Venom"
-    ],
-    [
-     "Film",
-     "Venom: Let There Be Carnage"
-    ],
-    [
-     "Boy",
-     "6 inç (yaklaşık 15 cm)"
-    ],
-    [
-     "Durum",
-     "Sıfır / kullanılmamış"
-    ],
-    [
-     "Paket",
-     "Pencereli kutusunda"
-    ]
-   ],
-   "images": [
-    {
-     "src": "/img/hasbro-marvel-legends-venom-f9091/1.webp",
-     "thumb": "/img/hasbro-marvel-legends-venom-f9091/1-600.webp",
-     "w": 1200,
-     "h": 1600
-    }
-   ]
-  },
-  {
    "slug": "hot-wheels-2007-treasure-hunt-enzo-ferrari-kirmizi-1-64",
    "sahibinden_id": "",
    "title": "Hot Wheels 2007 Treasure Hunt Enzo Ferrari Diecast Model Araba 1/64 (1:64) – Kırmızı (09/12)",
