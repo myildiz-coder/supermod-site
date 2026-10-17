@@ -15,6 +15,12 @@ class References(HTMLParser):
                 if not target.exists():errors.append(f'Missing reference: {target.relative_to(ROOT)}')
 
 products=json.loads((ROOT/'products.json').read_text(encoding='utf-8'))['products']
+catalog=json.loads((ROOT/'assets/catalog.json').read_text(encoding='utf-8'))
+assert len(catalog)==len(products)
+for item,p in zip(catalog,products):
+    assert item['slug']==p['slug']
+    assert item['totalCents']==round(p['price']*120)
+    assert item['url']=='/urun/'+p['slug']+'/'
 for file in ROOT.rglob('index.html'):
     text=file.read_text(encoding='utf-8')
     References().feed(text)
@@ -34,7 +40,10 @@ for p in products:
     product=next(s for s in schemas if s.get('@type')=='Product')
     assert product['offers']['price']==total, f'{p["slug"]}: schema price mismatch'
     assert f'property="product:price:amount" content="{total}"' in text
-    assert '/assets/modern.css' in text
+    assert '/assets/modern.css?v=' in text
+    assert '/assets/modern.js?v=' in text
+    assert f'data-select="{p["slug"]}"' in text
+    assert text.count('id="selection-title"')==1
     for href in re.findall(r'href="(https://wa.me/[^\"]*)"',text):
         if '?text=' not in href:continue
         message=parse_qs(urlsplit(href).query)['text'][0]
