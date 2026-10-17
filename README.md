@@ -24,6 +24,8 @@ Kategoriler ürün verisi ve teknik özelliklerden üretilir. Kontrol komutundak
 - `assets/modern.css`: responsive düzen, renkler ve tipografi.
 - `assets/modern.js`: katalog arama/filtre/sıralama ve ürün galerisi.
 - WhatsApp düğmeleri yalnızca ürün bilgilerini içeren mesaj bağlantısı açar; kendiliğinden mesaj göndermez.
+- “Listem” en fazla 6 farklı modeli bir WhatsApp bilgi talebinde birleştirir. Her model bir adet kabul edilir; stok ayırmaz. Tarayıcıda yalnızca ürün kimlikleri saklanır, fiyatlar güncel `assets/catalog.json` dosyasından alınır. Depolama kapalıysa liste yalnızca sayfa açıkken korunur.
+- CSS ve JavaScript bağlantıları içerik özetiyle sürümlenir; yeni yayında eski tarayıcı önbelleğinin tasarımı karıştırması önlenir.
 - Yasal sayfaların mevcut taslak metinleri korunur.
 - Ziyaretçi takip kodu veya harici yazı tipi eklenmez.
 
