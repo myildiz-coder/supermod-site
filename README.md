@@ -28,5 +28,8 @@ Kategoriler ürün verisi ve teknik özelliklerden üretilir. Kontrol komutundak
 - CSS ve JavaScript bağlantıları içerik özetiyle sürümlenir; yeni yayında eski tarayıcı önbelleğinin tasarımı karıştırması önlenir.
 - Yasal sayfaların mevcut taslak metinleri korunur.
 - Ziyaretçi takip kodu veya harici yazı tipi eklenmez.
+- Katalog filtreleri `q`, `brand`, `max` ve `sort` URL parametreleriyle açılır. Paylaş düğmesi mevcut görünümün bağlantısını kopyalar; canonical adres kategori sayfasında kalır.
+- Ürün önerileri koleksiyon ilgisi, ölçek, üretici ve fiyat yakınlığıyla sıralanır. TypeSafe/JEV grupları `tools/related-groups.json` dosyasında kaynak özetiyle tutulur. Kaynak değişirse veya güven düşükse açık model adlarıyla eşleşen kurallar kullanılır. Tarayıcıdan TypeSafe çağrılmaz.
+- İsteğe bağlı yeniden gruplama: güncel TypeSafe belgelerini okuduktan ve `TYPESAFE_API_KEY` ortam değişkenini ayarladıktan sonra `python tools/classify_groups.py`. Anahtarı hiçbir dosyaya veya tarayıcı koduna yazmayın. Normal derleme bu çağrıyı yapmaz.
 
 Mobil yerleşim tarayıcıda 390 piksel genişlikte kontrol edilmiştir; fiziksel cihaz testi ayrıca yapılabilir.

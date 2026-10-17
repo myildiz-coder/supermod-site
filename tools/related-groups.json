@@ -1,0 +1,130 @@
+{
+  "model": "jev-1.13.0",
+  "products": {
+    "hot-wheels-2007-treasure-hunt-enzo-ferrari-kirmizi-1-64": {
+      "group": "ferrari",
+      "confidence": 1.0,
+      "source_sha256": "66ecf9cd91ce830dd990e599c3f2bee5af7241c2e6d7ea55c59cf549557b35fd"
+    },
+    "hot-wheels-2003-treasure-hunt-68-mercury-cougar-siyah-1-64": {
+      "group": "american",
+      "confidence": 1.0,
+      "source_sha256": "12d2d34a7a5a5cf603d97145be8e68ce25e41aa39189c97d3a8b47f1d71378f4"
+    },
+    "hot-wheels-bmw-m3-e36-race-kirmizi-1-64": {
+      "group": "german",
+      "confidence": 1.0,
+      "source_sha256": "521568f95ff01ed4932aa5863667ccce840baa12150965ac07afd741417a58b3"
+    },
+    "hot-wheels-premium-fast-furious-toyota-supra-gumus-1-64": {
+      "group": "japanese",
+      "confidence": 1.0,
+      "source_sha256": "86e4e4044c4ed3b198b42b27731a0a9365a0c13ce5e04cf448c46179497599fd"
+    },
+    "hot-wheels-super-treasure-hunt-71-el-camino-mor-1-64": {
+      "group": "american",
+      "confidence": 0.92,
+      "source_sha256": "a1a42a9679204c0ea76e2681f953079d7c4eb1b8d33529abc40ed0e8fbc62ea7"
+    },
+    "hot-wheels-car-culture-mercedes-benz-190e-evo-ii-siyah-1-64": {
+      "group": "german",
+      "confidence": 1.0,
+      "source_sha256": "2286f8bc7927c74ca1add71ec132d9ccdefbc0b7ea219036b2b74de868116c72"
+    },
+    "hot-wheels-car-culture-72-mercedes-benz-280-sel-4-5-yesil-1-64": {
+      "group": "german",
+      "confidence": 1.0,
+      "source_sha256": "dfbfe0d735869f6d9bad6153bf80bb1e76e6d8880c64ce3454f8a4014790877c"
+    },
+    "hot-wheels-17-ford-f-150-raptor-sari-1-64": {
+      "group": "american",
+      "confidence": 0.95,
+      "source_sha256": "1e60bb464addaaf2da2ea0c739bcaec3fccec8d688e9e7ffaa1116882fc5b8f4"
+    },
+    "hot-wheels-bmw-z4-m-motorsport-beyaz-1-64": {
+      "group": "german",
+      "confidence": 0.98,
+      "source_sha256": "bdc536bdc6cf7be2cf61f03d5f1023a789095053f9fc522f2902d92c4359c8f3"
+    },
+    "lego-technic-42043-mercedes-benz-arocs-3245": {
+      "group": "construction",
+      "confidence": 1.0,
+      "source_sha256": "90d779fd448d8e01a5338d870f72e74d33590146adb57b5a64c16217db03645e"
+    },
+    "hot-wheels-elite-64-lbwk-lamborghini-aventador-mavi-1-64": {
+      "group": "other_european",
+      "confidence": 0.94,
+      "source_sha256": "d08f53c2422953f40d7a41734b1c04039eb0e689d72517e499813701d4220f95"
+    },
+    "hot-wheels-2015-lamborghini-huracan-lp-610-4-yesil-1-64": {
+      "group": "other_european",
+      "confidence": 0.93,
+      "source_sha256": "ce989445e90f577a2a52ea72a3b834055c163abe930c262ea9fcd03b25f106af"
+    },
+    "hot-wheels-premium-fast-furious-bmw-m3-e46-gbw75-1-64": {
+      "group": "german",
+      "confidence": 0.69,
+      "source_sha256": "3d0043bdd1b6b4814af338da84701ac0faaf46f630533294f7c5f14977c34875"
+    },
+    "masdi-scania-r650-yesil-scn1106-1-64": {
+      "group": "truck",
+      "confidence": 0.99,
+      "source_sha256": "434060ca703e8066671a3f52045d0b6d3fc0f7c051a5d1ecbfc93febd276f699"
+    },
+    "dka-084-nissan-skyline-gt-r-r34-chameleon-1-64": {
+      "group": "japanese",
+      "confidence": 0.77,
+      "source_sha256": "ff336f7bb527df235600f5a47751bce2ef032094b778cf450f71580246685652"
+    },
+    "dka-088-koenigsegg-gt-show-1-64": {
+      "group": "other_european",
+      "confidence": 0.93,
+      "source_sha256": "a41128568030c86bbfe493510cc0d01589eb4018146ae40a6ac826f1d4e98669"
+    },
+    "aurora-model-ferrari-f40-mavi-figurlu-1-64": {
+      "group": "ferrari",
+      "confidence": 0.85,
+      "source_sha256": "e28bdb93109f15ce239c6253511ae68bced895939c85e63cad967c3b4a60e922"
+    },
+    "dka-085-ferrari-f40-akrilik-vitrin-1-64": {
+      "group": "ferrari",
+      "confidence": 0.78,
+      "source_sha256": "ef9ac377121d001ff8deb84924c3355798325b3f0df954b89fbbf6a9a3214feb"
+    },
+    "dcm-mercedes-amg-c63s-estate-siyah-1-64": {
+      "group": "german",
+      "confidence": 0.95,
+      "source_sha256": "99f18d8be90e8ab73a309410568761edf08714707ad93e94f3d624e0ac2b09e8"
+    },
+    "et-model-fuji-toyota-gr-yaris-supreme-1-64": {
+      "group": "japanese",
+      "confidence": 0.74,
+      "source_sha256": "33089566009f295fccada368778d7b59b31b26374aa647129bd3836befff5815"
+    },
+    "glory-model-mercedes-w211-e-serisi-gumus-1-64": {
+      "group": "german",
+      "confidence": 0.71,
+      "source_sha256": "262a321e88f08af5e626c54a18ce3c25d4f81b1c83eddcadf69a356f5c8aece6"
+    },
+    "tnt-bentley-flying-spur-shooting-brake-kirmizi-1-64": {
+      "group": "truck",
+      "confidence": 0.68,
+      "source_sha256": "07a1651219a5c356156b22ec50b55d06a890faf9634082a3e0ed1d3d657ee5d9"
+    },
+    "king-model-bmw-m5-e60-beyaz-1-64": {
+      "group": "truck",
+      "confidence": 0.63,
+      "source_sha256": "342944c37d28a2cb90f28c432ce06ba2efeafbc63b13e624a2c5103709e89e6d"
+    },
+    "masdi-scania-770s-siyah-scn1102-1-64": {
+      "group": "truck",
+      "confidence": 0.97,
+      "source_sha256": "a1050d7e7ee97fe59284f2480f651f1da24288228c7e36d806b8e63eb26d7e58"
+    },
+    "bburago-audi-rs6-avant-gumball-3000-1-18-kutusuz": {
+      "group": "german",
+      "confidence": 0.74,
+      "source_sha256": "b346afa5a340a22b5f66713733290611bc502a7b82e8f41b0e1f7f71c2d5890a"
+    }
+  }
+}

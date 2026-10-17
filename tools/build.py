@@ -11,6 +11,28 @@ for path in src.rglob('index.html'):
     route='/' if path.parent==src else '/'+path.parent.relative_to(src).as_posix()+'/'
     originals[route]=path.read_text(encoding='utf-8')
 products=json.loads((src/'products.json').read_text(encoding='utf-8'))['products']
+group_file=src/'tools/related-groups.json'
+group_data=json.loads(group_file.read_text(encoding='utf-8'))['products'] if group_file.exists() else {}
+
+def interest_group(p):
+ # Never reuse an inference after its source fields change.
+ evidence={key:p[key] for key in ['slug','title','brand','specs']}
+ digest=hashlib.sha256(json.dumps(evidence,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+ answer=group_data.get(p['slug'],{})
+ if answer.get('source_sha256')==digest and answer.get('confidence',0)>=0.75:
+  return answer['group']
+ # Explicit model names provide a deterministic fallback for uncertain records.
+ title=p['title'].casefold()
+ for group,pattern in [('construction',r'\blego\b'),('truck',r'\bscania\b'),('ferrari',r'\bferrari\b'),('japanese',r'\b(nissan|toyota)\b'),('german',r'\b(bmw|mercedes|audi)\b'),('american',r'\b(ford|mercury|chevrolet|el camino)\b'),('other_european',r'\b(bentley|lamborghini|koenigsegg)\b')]:
+  if re.search(pattern,title):return group
+ return None
+
+def related_products(p):
+ group=interest_group(p)
+ scale=dict(p['specs']).get('Ölçek')
+ def key(other):
+  return (not(group and interest_group(other)==group),not(scale and dict(other['specs']).get('Ölçek')==scale),other['brand']!=p['brand'],abs(other['price']-p['price']),other['slug'])
+ return sorted((other for other in products if other['slug']!=p['slug']),key=key)[:4]
 esc=lambda s:html.escape(str(s),quote=True)
 money=lambda n: f'{n:,.2f}'.replace(',','X').replace('.',',').replace('X','.')+' TL'
 def short(p):
@@ -30,6 +52,9 @@ def card(p):
 selection_dialog='''<dialog class="selection-dialog" aria-labelledby="selection-title"><div class="selection-heading"><div><p class="eyebrow">KOLEKSİYONUNUZUN SONRAKİ PARÇALARI</p><h2 id="selection-title">Seçtiğim modeller</h2></div><button type="button" class="selection-close" aria-label="Listeyi kapat">×</button></div><p class="selection-help">En fazla 6 modeli tek mesajda sorun. Listeye eklemek stok ayırmaz.</p><div class="selection-items"></div><p class="selection-empty">Listeniz henüz boş. Beğendiğiniz modellerde “Listeye ekle” düğmesine dokunun.</p><div class="selection-summary" hidden><div class="selection-total"><span>KDV dahil ürün toplamı</span><strong></strong></div><p>Kargo ayrıca. Güncel stok, fiyat ve teslimat WhatsApp üzerinden teyit edilir.</p><a class="button accent selection-send" target="_blank" rel="noopener">Listeyi WhatsApp'ta sor ↗</a></div><p class="selection-storage">Listeniz bu tarayıcıda saklanır.</p><p class="selection-status" role="status" aria-live="polite"></p></dialog><div class="selection-toast" role="status" aria-live="polite"></div>'''
 
 def page(title,body,canonical='/'):
+    if '<form class="filters"' in body:
+        body=re.sub(r'<div class="filter-tools">.*?</div>','',body,flags=re.S)
+        body=body.replace('</form>','</form><div class="filter-tools"><button class="share-filter" type="button">Bu görünümün bağlantısını kopyala ↗</button><span class="share-status" role="status" aria-live="polite"></span><input class="share-fallback" type="text" readonly aria-label="Paylaşılabilir katalog bağlantısı" hidden></div>',1)
     # Preserve canonical, social images and structured data from existing pages.
     old=originals.get(canonical,originals['/'])
     head=re.search(r'<head>(.*?)</head>',old,re.S).group(1)
@@ -63,7 +88,7 @@ body=f'''<main id="main"><section class="hero-modern"><div class="wrap hero-layo
 for p in products:
  specs=dict(p['specs'])
  name=specs.get('Model',specs.get('Araç',short(p)))
- related=[x for x in products if x['slug']!=p['slug']][:4]
+ related=related_products(p)
  body=f'''<main id="main" class="wrap detail-main"><nav class="breadcrumbs" aria-label="Sayfa yolu"><a href="/">Ana sayfa</a><span>/</span><a href="/urunler/">Koleksiyon</a><span>/</span><span>{esc(name)}</span></nav><div class="detail-layout"><section class="gallery" aria-label="Ürün fotoğrafları"><div class="gallery-main"><img id="gallery-main" src="{p['images'][0]['src']}" alt="{esc(short(p))}" width="1000" height="1000" fetchpriority="high"></div><div class="thumbnails">{''.join(f'<button type="button" class="thumbnail {"selected" if i==0 else ""}" data-src="{im["src"]}" aria-label="Ürün fotoğrafı {i+1}" aria-pressed="{"true" if i==0 else "false"}"><img src="{im["thumb"]}" alt="" width="80" height="80"></button>' for i,im in enumerate(p['images']))}</div><p class="photo-note">Ürünün kendi fotoğrafları.</p></section><section class="detail-copy"><p class="eyebrow">{esc(p['brand'])} / {esc(specs.get('Ölçek','Koleksiyon'))}</p><h1>{esc(name)}</h1><p class="detail-subtitle">{esc(short(p))}</p><p class="detail-intro">{esc(p['short'])}</p><div class="detail-price"><strong>{money(p['price']*1.2)}</strong><span>KDV dahil ürün fiyatı</span><small>Kargo bedeli ve güncel stok sipariş öncesinde netleştirilir.</small></div><a class="button accent order-button" href="{wa(p)}" target="_blank" rel="noopener">WhatsApp ile sipariş ver <span>↗</span></a>{selection_button(p)}<p class="order-note">Ürün adı ve bağlantısı mesajınıza hazır eklenir.</p><div class="delivery"><div><b>Ürün ve paket durumu</b><span>{esc(specs.get('Durum','Detaylar ürün açıklamasında'))} · {esc(specs.get('Paket','Paket bilgisi için iletişime geçin'))}</span></div><div><b>Ödeme & teslimat</b><span>Havale/EFT, kredi kartı veya link ile ödeme.<br>Ataşehir mağazadan teslim veya takipli kargo.</span></div></div><details open><summary>Ürün özellikleri</summary><dl>{''.join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k,v in p['specs'])}</dl></details><details open><summary>Model ve kondisyon hakkında</summary>{''.join('<p>'+esc(d)+'</p>' for d in p['description'])}<ul>{''.join('<li>'+esc(f)+'</li>' for f in p['features'])}</ul></details></section></div><section class="related"><div class="section-head"><div><p class="eyebrow">KEŞFETMEYE DEVAM EDİN</p><h2>Vitrinden diğer modeller.</h2></div></div><div class="product-grid">{''.join(card(x) for x in related)}</div></section><div class="mobile-buy"><div><strong>{money(p['price']*1.2)}</strong><small>KDV dahil · Kargo ayrıca</small></div><a class="button accent" href="{wa(p)}" target="_blank" rel="noopener">Sipariş ver ↗</a></div></main>'''
  target=out/url(p).strip('/')/'index.html'
  target.write_text(page(short(p)+' | Süpermod',body,url(p)),encoding='utf-8')
