@@ -3,14 +3,38 @@ if(grid){
  const form=document.querySelector('.filters'),query=document.querySelector('#query'),brand=document.querySelector('#brand'),budget=document.querySelector('#budget'),sort=document.querySelector('#sort'),more=document.querySelector('#show-all');
  let expanded=document.querySelector('.collection').dataset.expanded==='true';
  const normalize=s=>s.toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ı/g,'i');
+ query.maxLength=120;
+ function restoreFilters(){
+  form.reset();const params=new URLSearchParams(location.search);query.value=(params.get('q')||'').slice(0,120);
+  for(const [input,name] of [[brand,'brand'],[budget,'max'],[sort,'sort']]){
+   const value=params.get(name);if([...input.options].some(option=>option.value===value))input.value=value;
+  }
+ }
+ function filterUrl(){
+  const url=new URL(location.href);
+  for(const [name,value] of [['q',query.value.trim()],['brand',brand.value],['max',budget.value],['sort',sort.value==='default'?'':sort.value]]){
+   if(value)url.searchParams.set(name,value);else url.searchParams.delete(name);
+  }
+  return url;
+ }
  function expand(){if(expanded)return;grid.append(document.querySelector('#remaining-products').content.cloneNode(true));expanded=true;more.hidden=true;}
- function filter(){
+ function filter(updateUrl=true){
   if(query.value||brand.value||budget.value||sort.value!=='default')expand();
   const cards=[...grid.children];cards.forEach((c,i)=>{if(!c.dataset.position)c.dataset.position=i+1;c.hidden=!(normalize(c.dataset.search).includes(normalize(query.value.trim()))&&(!brand.value||c.dataset.brand===brand.value)&&(!budget.value||Number(c.dataset.total)<=Number(budget.value)));});
   cards.sort((a,b)=>sort.value==='default'?a.dataset.position-b.dataset.position:sort.value==='asc'?a.dataset.total-b.dataset.total:b.dataset.total-a.dataset.total).forEach(c=>grid.append(c));
   const count=cards.filter(c=>!c.hidden).length;document.querySelector('.result-count').textContent=`${count} model gösteriliyor${expanded?'':' · Daha fazlasını aşağıdan keşfedin'}`;document.querySelector('.empty').hidden=count!==0;
+  if(updateUrl)try{history.replaceState(null,'',filterUrl());}catch{/* Filtering still works without History API access. */}
  }
- form.addEventListener('submit',e=>e.preventDefault());form.addEventListener('input',filter);form.addEventListener('change',filter);more.addEventListener('click',()=>{expand();filter()});document.querySelector('.reset').addEventListener('click',()=>{form.reset();filter();query.focus()});filter();
+ form.addEventListener('submit',e=>e.preventDefault());form.addEventListener('input',()=>filter());form.addEventListener('change',()=>filter());more.addEventListener('click',()=>{expand();filter()});document.querySelector('.reset').addEventListener('click',()=>{form.reset();filter();query.focus()});
+ window.addEventListener('popstate',()=>{restoreFilters();filter(false)});
+ restoreFilters();filter(false);
+ const share=document.querySelector('.share-filter'),shareStatus=document.querySelector('.share-status');
+ share.addEventListener('click',async()=>{
+  const value=filterUrl().href;
+  try{await navigator.clipboard.writeText(value);shareStatus.textContent='Bağlantı kopyalandı.';}catch{
+   const field=document.querySelector('.share-fallback');field.hidden=false;field.value=value;field.focus();field.select();shareStatus.textContent='Bağlantıyı bu alandan kopyalayabilirsiniz.';
+  }
+ });
 }
 document.querySelectorAll('.thumbnail').forEach(button=>button.addEventListener('click',()=>{document.querySelector('#gallery-main').src=button.dataset.src;document.querySelectorAll('.thumbnail').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',b===button?'true':'false')})}));
 

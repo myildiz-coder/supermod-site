@@ -29,6 +29,8 @@ for file in ROOT.rglob('index.html'):
     assert len(re.findall(r'<h1\b',text))==1, f'{file}: expected one main heading'
     assert 'noindex' not in text, f'{file}: preview indexing restriction'
     assert '<link rel="canonical"' in text, f'{file}: canonical missing'
+    if '<form class="filters"' in text:
+        assert text.count('class="share-filter"')==1, f'{file}: expected one filter share control'
     for raw in re.findall(r'<script type="application/ld\+json">(.*?)</script>',text,re.S):
         json.loads(raw)
 
@@ -54,4 +56,10 @@ for route,count in [('urunler',25),('1-64-diecast-model-araba',23),('1-18-model-
     actual=(ROOT/route/'index.html').read_text(encoding='utf-8').count('<article class="product-card"')
     assert actual==count, f'{route}: expected {count}, got {actual}'
 assert not errors,'\n'.join(errors)
+# Collector-relevant regression cases, independent of model confidence values.
+scania=(ROOT/'urun/masdi-scania-r650-yesil-scn1106-1-64/index.html').read_text(encoding='utf-8').split('<section class="related">')[1]
+assert re.search(r'<article.*?href="([^"]+)"',scania).group(1)=='/urun/masdi-scania-770s-siyah-scn1102-1-64/'
+ferrari=(ROOT/'urun/hot-wheels-2007-treasure-hunt-enzo-ferrari-kirmizi-1-64/index.html').read_text(encoding='utf-8').split('<section class="related">')[1]
+first_two=re.findall(r'<article.*?href="([^"]+)"',ferrari)[:2]
+assert len(first_two)==2 and all('ferrari-f40' in link for link in first_two)
 print(f'PASS: {len(products)} products; prices, WhatsApp messages, SEO, category counts and local references.')
